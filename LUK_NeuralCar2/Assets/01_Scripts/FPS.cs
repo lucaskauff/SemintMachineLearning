@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class FPS : MonoBehaviour
@@ -10,16 +8,13 @@ public class FPS : MonoBehaviour
     float frames;
     float timeLeft;
     float fpsCount;
-    Text text;
+    [SerializeField] Text text;
 
-    // Start is called before the first frame update
     void Start()
     {
         timeLeft = updateInterval;
-        text = GetComponent<Text>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         timeLeft -= Time.deltaTime;
@@ -29,7 +24,7 @@ public class FPS : MonoBehaviour
         if (timeLeft <= 0)
         {
             fpsCount = accum / frames;
-            text.text = fpsCount.ToString("f2");
+            text.text = "FPS: " + fpsCount.ToString("f0");
 
             switch (fpsCount)
             {
@@ -48,6 +43,5 @@ public class FPS : MonoBehaviour
             accum = 0;
             frames = 0;
         }
-
     }
 }

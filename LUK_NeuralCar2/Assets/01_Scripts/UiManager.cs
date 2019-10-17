@@ -1,26 +1,34 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class UiManager : MonoBehaviour
 {
-    bool isOpen;
-    public GameObject toolsMenu;
+    //UI parts
+    [SerializeField] GameObject toolsMenu = default;
+    [SerializeField] GameObject netMenu = default;
+    [SerializeField] GameObject minimapMenu = default;
+    [SerializeField] GameObject mapCamera = default;
 
-    public void OpenCloseMenu()
+    //Private bools
+    bool isToolsMenuOpen;
+    bool isNetMenuOpen;
+    bool isMapMenuOpen;
+
+    public void OpenCloseToolsMenu()
     {
-        if(isOpen == true)
-        {
-            toolsMenu.SetActive(false);
-            isOpen = false;
-        }
-        else if(isOpen == false)
-        {
-            toolsMenu.SetActive(true);
-            isOpen = true;
-        }
+        isToolsMenuOpen = !isToolsMenuOpen;
+        toolsMenu.SetActive(isToolsMenuOpen);
     }
 
+    public void OpenCloseNetMenu()
+    {
+        isNetMenuOpen = !isNetMenuOpen;
+        netMenu.SetActive(isNetMenuOpen);
+    }
 
+    public void OpenMapMenu()
+    {
+        isMapMenuOpen = !isMapMenuOpen;
+        minimapMenu.SetActive(isMapMenuOpen);
+        mapCamera.SetActive(isMapMenuOpen);
+    }
 }

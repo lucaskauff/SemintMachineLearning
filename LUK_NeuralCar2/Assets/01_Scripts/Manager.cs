@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
-
     public int populationSize = 50;
     public float trainingDuration = 30f;
     [Range(0,100)]
@@ -14,19 +13,17 @@ public class Manager : MonoBehaviour
     public GameObject agentPrefab;
     public Transform agentGroup;
 
-    List<Agent> agents = new List<Agent>();
+    public List<Agent> agents = new List<Agent>();
     Agent agent;
 
     public bool autoSave;
 
     public int[] layers;
 
-    // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(InitCoroutine());
     }
-
 
     IEnumerator InitCoroutine()
     {
@@ -184,7 +181,6 @@ public class Manager : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(Loop());
     }
-
 
     [ContextMenu("Save")]
     public void Save()

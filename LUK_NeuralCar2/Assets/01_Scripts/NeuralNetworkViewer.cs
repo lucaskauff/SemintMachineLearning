@@ -7,16 +7,21 @@ public class NeuralNetworkViewer : MonoBehaviour
 
     public Gradient colorGradient;
 
-    const float decalX = 100;
-    const float decalY = 20;
+    const float decalX = 60;
+    const float decalY = 10;
+
+    [SerializeField] float axonThickness = 2f;
 
     public Transform viewerGroup;
 
     public GameObject neuronPrefab;
     public GameObject axonPrefab;
 
+    /*
+    [SerializeField] Vector2 fitnessPos = Vector2.zero;
     public GameObject fitnessPrefab;
-    private GameObject fitnesTransform;
+    private GameObject fitnessTransform;
+    */
 
     public Agent agent;
 
@@ -26,7 +31,7 @@ public class NeuralNetworkViewer : MonoBehaviour
 
     private GameObject neuron;
     private GameObject axon;
-    private Text fitness;
+    [SerializeField] Text fitness;
 
     private int i;
     private int x;
@@ -115,7 +120,7 @@ public class NeuralNetworkViewer : MonoBehaviour
                     axon.GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, zAngle);
 
                     axon.GetComponent<RectTransform>().sizeDelta =
-                        new Vector2(new Vector2(decalX, (posY - posZ) * decalY).magnitude * 1 - 35, 2);
+                        new Vector2(new Vector2(decalX, (posY - posZ) * decalY).magnitude * 1 - 22, axonThickness);
 
                     axons[x][y][z] = axon.GetComponent<Image>();
                 }
@@ -159,12 +164,12 @@ public class NeuralNetworkViewer : MonoBehaviour
             }
         }
 
-        fitnesTransform = (Instantiate(fitnessPrefab, transform.position, Quaternion.identity, viewerGroup));
+        //fitnessTransform = Instantiate(fitnessPrefab, new Vector3(170, 290), Quaternion.identity, viewerGroup);
 
-        fitnesTransform.GetComponent<RectTransform>().anchoredPosition =
-            new Vector2(decalX * net.neurons.Length * .5f + 300, 300);
+        //fitnessTransform.GetComponent<RectTransform>().anchoredPosition =
+            //new Vector2(decalX * net.neurons.Length * .5f + 300, 300);
 
-        fitness = fitnesTransform.GetComponent<Text>();
+        //fitness = fitnessTransform.GetComponent<Text>();
     }
 
     public void Update()
@@ -178,7 +183,8 @@ public class NeuralNetworkViewer : MonoBehaviour
             }
         }
 
-        fitness.text = agent.fitness.ToString("F1");
+        fitness.text = "Fitness: " + agent.fitness.ToString("F2");
+        //fitness.rectTransform.anchoredPosition = fitnessPos;
     }
 
     public void RefreshAxon()
