@@ -2,7 +2,7 @@
 
 public class PlayerInput : MonoBehaviour
 {
-    [SerializeField] CarController carController;
+    [SerializeField] CarController carController = default;
 
     private void Update()
     {

@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
+[Serializable]
 public class NeuralNetwork
 {
     public int[] layers;
@@ -66,6 +68,20 @@ public class NeuralNetwork
         }
 
         axons = axonsList.ToArray();
+    }
+
+    public void CopyNet(NeuralNetwork netToCopy)
+    {
+        for (x = 0; x < netToCopy.axons.Length; x++)
+        {
+            for (y = 0; y < netToCopy.axons[x].Length; y++)
+            {
+                for (z = 0; z < netToCopy.axons[x][y].Length; z++)
+                {
+                    axons[x][y][z] = netToCopy.axons[x][y][z];
+                }
+            }
+        }
     }
 
     float value = 0;

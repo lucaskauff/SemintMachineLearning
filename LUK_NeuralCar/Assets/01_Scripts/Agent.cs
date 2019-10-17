@@ -1,12 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using System;
 
-public class Agent : MonoBehaviour
+public class Agent : MonoBehaviour,
+IComparable<Agent>
 {
     public NeuralNetwork net;
     public CarController carController;
     public float fitness;
-    public float rayRange = 1;
+    public float rayRange = 3;
 
     public LayerMask layerMask;
 
@@ -18,6 +21,13 @@ public class Agent : MonoBehaviour
     public float lastDistCheckpoint;
 
     public Rigidbody rb;
+
+    public Material firstMat;
+    public Material mutatedMat;
+    public Material defaultMat;
+
+    public Renderer iRenderer;
+    public Renderer posRenderer;
 
     public void Start()
     {
@@ -149,5 +159,38 @@ public class Agent : MonoBehaviour
             return vB;
 
         return vA + v * t;
+    }
+
+    public int CompareTo(Agent other)
+    {
+        if (fitness < other.fitness)
+        {
+            return 1;
+        }
+
+        if (fitness > other.fitness)
+        {
+            return -1;
+        }
+
+        return 0;
+    }
+
+    public void SetDefaultColor()
+    {
+        iRenderer.material = defaultMat;
+        posRenderer.material = defaultMat;
+    }
+
+    public void SetMutatedColor()
+    {
+        iRenderer.material = mutatedMat;
+        posRenderer.material = mutatedMat;
+    }
+
+    public void SetFirstColor()
+    {
+        iRenderer.material = firstMat;
+        posRenderer.material = firstMat;
     }
 }
