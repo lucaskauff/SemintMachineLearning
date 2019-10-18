@@ -31,7 +31,7 @@ public class NeuralNetworkViewer : MonoBehaviour
 
     private GameObject neuron;
     private GameObject axon;
-    [SerializeField] Text fitness;
+    [SerializeField] Text fitness = default;
 
     private int i;
     private int x;

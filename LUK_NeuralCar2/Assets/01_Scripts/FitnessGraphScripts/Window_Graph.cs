@@ -9,54 +9,67 @@ public class Window_Graph : MonoBehaviour
     [SerializeField] Manager manager = default;
     [SerializeField] Sprite circleSprite = default;
     [SerializeField] RectTransform graphContainer = default;
+    [SerializeField] Text ord = default;
 
     [Header("Serializable variables")]
-    [SerializeField] Vector2 defaultPos = Vector2.zero;
-    [SerializeField] Vector2 circleSize = default;
-    [SerializeField] float highestFitness = 100f;
+    [SerializeField] float circleSize = 2f;
+    [SerializeField] float highestFitnessOnStart = 100f;
+    [SerializeField] Color defaultClr = Color.white;
+    [SerializeField] Color mutatedClr = Color.green;
 
     //Hidden public variables
     [HideInInspector] public List<float> valueList;
 
     //Private
     RectTransform[] dotList;
+    Image[] circleList;
 
+    Vector2 defaultPos = Vector2.zero;
     float graphWidth;
     float graphHeight;
+
+    float highestFitness;
 
     private void Start()
     {
         graphWidth = graphContainer.sizeDelta.x;
         graphHeight = graphContainer.sizeDelta.y;
 
+        highestFitness = highestFitnessOnStart;
+
         dotList = new RectTransform[manager.populationSize];
+        circleList = new Image[dotList.Length];
 
         CreateCircles(defaultPos);
     }
-
-    private void Update()
-    {
-        UpdateCircles();
-    } 
 
     void CreateCircles(Vector2 startPos)
     {
         for (int i = 0; i < manager.populationSize; i++)
         {
-            GameObject gO = new GameObject("Circle"+i, typeof(Image));
-            gO.transform.SetParent(graphContainer, false);
-            gO.GetComponent<Image>().sprite = circleSprite;
-
+            GameObject gO = new GameObject("Circle" + i, typeof(Image));
             RectTransform rectT = gO.GetComponent<RectTransform>();
+            Image theImage = gO.GetComponent<Image>();
+
+            gO.transform.SetParent(graphContainer, false);
+            theImage.sprite = circleSprite;
+
             rectT.anchoredPosition = startPos;
-            rectT.sizeDelta = circleSize;
+            rectT.sizeDelta = new Vector2(circleSize, circleSize);
             rectT.anchorMin = new Vector2(0, 0);
             rectT.anchorMax = new Vector2(0, 0);
 
+            circleList[i] = theImage;
             dotList[i] = rectT;
             valueList.Add(0);
         }
     }
+
+    private void Update()
+    {
+        UpdateCircles();
+        UpdateOrd();
+    } 
 
     void UpdateCircles()
     {
@@ -68,12 +81,43 @@ public class Window_Graph : MonoBehaviour
             {
                 highestFitness = valueList[i];
             }
+            /*
+            else if (valueList[i] > highestFitness / 2)
+            {
+                circleList[i].color = colorGreen;
+            }
+            else
+            {
+                circleList[i].color = colorRed;
+            }
+            */
 
-            valueList.Sort();
+            if (manager.agents[i].isMutated)
+            {
+                circleList[i].color = mutatedClr;
+            }
+            else
+            {
+                circleList[i].color = defaultClr;
+            }
 
             float xPosition = i * (graphWidth / dotList.Length);
             float yPosition = (valueList[i] / highestFitness) * graphHeight;
             dotList[i].anchoredPosition = new Vector2(xPosition, yPosition);
         }
+
+        manager.agents.Sort();
+
+    }
+
+    void UpdateOrd()
+    {
+        if (manager.restarted)
+        {
+            highestFitness = highestFitnessOnStart;
+            manager.restarted = false;
+        }
+
+        ord.text = highestFitness.ToString("F0");
     }
 }

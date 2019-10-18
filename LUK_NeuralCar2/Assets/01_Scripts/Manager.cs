@@ -17,6 +17,7 @@ public class Manager : MonoBehaviour
     Agent agent;
 
     public bool autoSave;
+    public bool restarted = false;
 
     public int[] layers;
 
@@ -180,6 +181,8 @@ public class Manager : MonoBehaviour
     {
         StopAllCoroutines();
         StartCoroutine(Loop());
+
+        restarted = true;
     }
 
     [ContextMenu("Save")]

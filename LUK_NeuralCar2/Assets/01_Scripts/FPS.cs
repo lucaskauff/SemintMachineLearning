@@ -8,7 +8,7 @@ public class FPS : MonoBehaviour
     float frames;
     float timeLeft;
     float fpsCount;
-    [SerializeField] Text text;
+    [SerializeField] Text text = default;
 
     void Start()
     {

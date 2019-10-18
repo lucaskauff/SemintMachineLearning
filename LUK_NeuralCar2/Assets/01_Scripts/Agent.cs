@@ -30,6 +30,7 @@ public class Agent : MonoBehaviour, IComparable<Agent>
     public Renderer posRender;
 
     public CarColor carColor;
+    public bool isMutated = false;
 
     private void Start()
     {
@@ -195,14 +196,17 @@ public class Agent : MonoBehaviour, IComparable<Agent>
             case CarColor.First:
                 render.material = firstMat;
                 posRender.material = firstMat;
+                isMutated = false;
                 break;
             case CarColor.Default:
                 render.material = defaultMat;
                 posRender.material = defaultMat;
+                isMutated = false;
                 break;
             case CarColor.Mutated:
                 render.material = mutatedMat;
                 posRender.material = mutatedMat;
+                isMutated = true;
                 break;
         }
     }
