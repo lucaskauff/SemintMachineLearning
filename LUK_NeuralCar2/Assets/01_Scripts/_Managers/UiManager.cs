@@ -3,6 +3,7 @@
 public class UiManager : MonoBehaviour
 {
     //UI parts
+    [SerializeField] GameObject generalInfosMenu = default;
     [SerializeField] GameObject toolsMenu = default;
     [SerializeField] GameObject netMenu = default;
     [SerializeField] GameObject minimapMenu = default;
@@ -10,10 +11,17 @@ public class UiManager : MonoBehaviour
     [SerializeField] GameObject graphMenu = default;
 
     //Private bools
+    bool isGeneralInfosMenuOpen;
     bool isToolsMenuOpen;
     bool isNetMenuOpen;
     bool isMapMenuOpen;
     bool isGraphMenuOpen;
+
+    public void OpenGeneralInfosMenu()
+    {
+        isGeneralInfosMenuOpen = !isGeneralInfosMenuOpen;
+        generalInfosMenu.SetActive(isGeneralInfosMenuOpen);
+    }
 
     public void OpenCloseToolsMenu()
     {

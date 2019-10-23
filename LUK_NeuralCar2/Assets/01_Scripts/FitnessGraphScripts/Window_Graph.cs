@@ -81,16 +81,6 @@ public class Window_Graph : MonoBehaviour
             {
                 highestFitness = valueList[i];
             }
-            /*
-            else if (valueList[i] > highestFitness / 2)
-            {
-                circleList[i].color = colorGreen;
-            }
-            else
-            {
-                circleList[i].color = colorRed;
-            }
-            */
 
             if (manager.agents[i].isMutated)
             {

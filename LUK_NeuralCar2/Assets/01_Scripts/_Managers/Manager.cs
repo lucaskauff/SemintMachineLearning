@@ -9,6 +9,8 @@ public class Manager : MonoBehaviour
     public float trainingDuration = 30f;
     [Range(0,100)]
     public float mutationRate = 8f;
+    public int generationNb = 0;
+    public float timeLeftForThisLoop = 30f;
 
     public GameObject agentPrefab;
     public Transform agentGroup;
@@ -21,6 +23,9 @@ public class Manager : MonoBehaviour
 
     public int[] layers;
 
+    float timeSpentOnScene = 0;
+    bool shouldUpdateTimeSpent = true;
+
     void Start()
     {
         StartCoroutine(InitCoroutine());
@@ -28,25 +33,44 @@ public class Manager : MonoBehaviour
 
     IEnumerator InitCoroutine()
     {
+        if (shouldUpdateTimeSpent)
+        {
+            timeSpentOnScene = Time.time;
+            shouldUpdateTimeSpent = false;
+        }
+
         NewGeneration();
         InitNeuralNetworkViewer();
         Load1();
         Focus();
 
+        timeLeftForThisLoop = trainingDuration - (Time.time - timeSpentOnScene);
+
         yield return new WaitForSeconds(trainingDuration);
+
         StartCoroutine(Loop());
     }
 
     IEnumerator Loop()
     {
+        if (shouldUpdateTimeSpent)
+        {
+            timeSpentOnScene = Time.time;
+            shouldUpdateTimeSpent = false;
+        }
+
         NewGeneration();
         Focus();
-        if (autoSave == true)
+        if (autoSave)
         {
             Save();
         }
 
+        Debug.Log(Time.time);
+        timeLeftForThisLoop = trainingDuration - (Time.time - timeSpentOnScene);
+
         yield return new WaitForSeconds(trainingDuration);
+
         StartCoroutine(Loop());
     }
 
@@ -57,6 +81,8 @@ public class Manager : MonoBehaviour
         Mutate();
         SetColorToCar();
         ResetAgents();
+
+        generationNb += 1;
     }
 
 
@@ -183,6 +209,7 @@ public class Manager : MonoBehaviour
         StartCoroutine(Loop());
 
         restarted = true;
+        generationNb = 1;
     }
 
     [ContextMenu("Save")]
