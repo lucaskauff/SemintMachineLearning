@@ -24,27 +24,25 @@ public class Manager : MonoBehaviour
     public int[] layers;
 
     float timeSpentOnScene = 0;
-    bool shouldUpdateTimeSpent = true;
 
     void Start()
     {
         StartCoroutine(InitCoroutine());
     }
 
+    private void Update()
+    {
+        timeLeftForThisLoop = trainingDuration - (Time.time - timeSpentOnScene);
+    }
+
     IEnumerator InitCoroutine()
     {
-        if (shouldUpdateTimeSpent)
-        {
-            timeSpentOnScene = Time.time;
-            shouldUpdateTimeSpent = false;
-        }
-
         NewGeneration();
         InitNeuralNetworkViewer();
         Load1();
         Focus();
 
-        timeLeftForThisLoop = trainingDuration - (Time.time - timeSpentOnScene);
+        timeSpentOnScene = Time.time;
 
         yield return new WaitForSeconds(trainingDuration);
 
@@ -53,12 +51,6 @@ public class Manager : MonoBehaviour
 
     IEnumerator Loop()
     {
-        if (shouldUpdateTimeSpent)
-        {
-            timeSpentOnScene = Time.time;
-            shouldUpdateTimeSpent = false;
-        }
-
         NewGeneration();
         Focus();
         if (autoSave)
@@ -66,8 +58,7 @@ public class Manager : MonoBehaviour
             Save();
         }
 
-        Debug.Log(Time.time);
-        timeLeftForThisLoop = trainingDuration - (Time.time - timeSpentOnScene);
+        timeSpentOnScene = Time.time;
 
         yield return new WaitForSeconds(trainingDuration);
 

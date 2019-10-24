@@ -9,17 +9,21 @@ public class GeneralInfosUI : MonoBehaviour
     [SerializeField] Manager manager = default;
     [SerializeField] Text timeLeft = default;
     [SerializeField] Text genNbText = default;
-    //[SerializeField] 
+    [SerializeField] Text popSize = default;
+    [SerializeField] Text trainingDur = default;
+    [SerializeField] Text mutationRate = default;
 
     private void Update()
     {
         UpdateValues();
-
     }
 
     void UpdateValues()
     {
-        timeLeft.text = "Time left: " + manager.trainingDuration.ToString("F2");
-        genNbText.text = "Generations: " + manager.generationNb.ToString();
+        timeLeft.text = "Time left: " + manager.timeLeftForThisLoop.ToString("F2");
+        genNbText.text = "Generation: #" + manager.generationNb.ToString();
+        popSize.text = "Population: " + manager.populationSize.ToString();
+        trainingDur.text = "Duration: " + manager.trainingDuration.ToString();
+        mutationRate.text = "Mutation: " + manager.mutationRate.ToString() + "%";
     }
 }
