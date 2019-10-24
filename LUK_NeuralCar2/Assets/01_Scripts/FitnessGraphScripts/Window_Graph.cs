@@ -9,7 +9,9 @@ public class Window_Graph : MonoBehaviour
     [SerializeField] Manager manager = default;
     [SerializeField] Sprite circleSprite = default;
     [SerializeField] RectTransform graphContainer = default;
+    [SerializeField] RectTransform ligneMediane = default;
     [SerializeField] Text ord = default;
+    [SerializeField] Text ordMoyenne = default;
 
     [Header("Serializable variables")]
     [SerializeField] float circleSize = 2f;
@@ -29,6 +31,8 @@ public class Window_Graph : MonoBehaviour
     float graphHeight;
 
     float highestFitness;
+    float fitnessAddition;
+    float averageFitness;
 
     private void Start()
     {
@@ -73,24 +77,18 @@ public class Window_Graph : MonoBehaviour
 
     void UpdateCircles()
     {
+        fitnessAddition = 0;
+
         for (int i = 0; i < dotList.Length; i++)
         {
             valueList[i] = manager.agents[i].fitness;
+
+            fitnessAddition += valueList[i];
 
             if (valueList[i] > highestFitness)
             {
                 highestFitness = valueList[i];
             }
-            /*
-            else if (valueList[i] > highestFitness / 2)
-            {
-                circleList[i].color = colorGreen;
-            }
-            else
-            {
-                circleList[i].color = colorRed;
-            }
-            */
 
             if (manager.agents[i].isMutated)
             {
@@ -106,8 +104,11 @@ public class Window_Graph : MonoBehaviour
             dotList[i].anchoredPosition = new Vector2(xPosition, yPosition);
         }
 
+        /*
+        ligneMediane.anchoredPosition = new Vector2(ligneMediane.anchoredPosition.x,
+            dotList[(int)dotList.Length / 2].anchoredPosition.y);
+        */
         manager.agents.Sort();
-
     }
 
     void UpdateOrd()
@@ -115,9 +116,15 @@ public class Window_Graph : MonoBehaviour
         if (manager.restarted)
         {
             highestFitness = highestFitnessOnStart;
+            averageFitness = 0;
             manager.restarted = false;
+        }
+        else
+        {
+            averageFitness = fitnessAddition / valueList.Count;
         }
 
         ord.text = highestFitness.ToString("F0");
+        ordMoyenne.text = averageFitness.ToString("F0");
     }
 }
