@@ -11,6 +11,8 @@ public class ManagerInEditor : Editor
     SerializedProperty durationProperty;
     SerializedProperty mutationProperty;
 
+    bool showVariables = true;
+
     private void OnEnable()
     {
         //Binding of properties
@@ -27,44 +29,51 @@ public class ManagerInEditor : Editor
         //Title
         EditorGUILayout.LabelField("CUSTOM EDITOR");
 
-        //Show custom GUI controls
-        //Population
-        if (populationProperty.intValue <= 20)
-            EditorGUILayout.LabelField("(This amount of cars won't probably be enough)");
-        else if (populationProperty.intValue >= 150)
-            EditorGUILayout.LabelField("(This amount of cars will probably make you lag)");
-        else
-            EditorGUILayout.LabelField("(This amount of cars is fine !)");
+        //Toggle
+        showVariables = EditorGUILayout.Toggle("Show variables", showVariables);
 
-        EditorGUILayout.IntSlider(populationProperty, 0, 200, new GUIContent("Population"));
-        ProgressBar(populationProperty.intValue / 200f, "Population");
+        if (showVariables)
+        {
+            //Show custom GUI controls
+            //Population
+            if (populationProperty.intValue <= 20)
+                EditorGUILayout.LabelField("(This amount of cars won't probably be enough)");
+            else if (populationProperty.intValue >= 150)
+                EditorGUILayout.LabelField("(This amount of cars will probably make you lag)");
+            else
+                EditorGUILayout.LabelField("(This amount of cars is fine !)");
 
-        //Duration
-        int durationMinutes = durationProperty.intValue / 60;
-        int durationSeconds = durationProperty.intValue - durationMinutes * 60;
-        EditorGUILayout.LabelField("(= " + durationMinutes.ToString() + " minutes and " +
-            durationSeconds.ToString() + " seconds)");
+            EditorGUILayout.IntSlider(populationProperty, 0, 200, new GUIContent("Population"));
+            ProgressBar(populationProperty.intValue / 200f, "Population");
 
-        if (durationProperty.intValue <= 30)
-            EditorGUILayout.LabelField("(This training won't be very long...)");
+            //Duration
+            int durationMinutes = durationProperty.intValue / 60;
+            int durationSeconds = durationProperty.intValue - durationMinutes * 60;
+            EditorGUILayout.LabelField("(= " + durationMinutes.ToString() + " minutes and " +
+                durationSeconds.ToString() + " seconds)");
 
-        EditorGUILayout.IntSlider(durationProperty, 0, 300, new GUIContent("Duration"));
-        ProgressBar(durationProperty.intValue / 300f, "Duration");
+            if (durationProperty.intValue < 30)
+                EditorGUILayout.LabelField("(This training won't be very long...)");
 
-        //Mutation
-        if (mutationProperty.intValue == 0)
-            EditorGUILayout.LabelField("(This is definitely not enough)");
-        else if (mutationProperty.intValue >= 75)
-            EditorGUILayout.LabelField("(This is probably too much)");
-        else
-            EditorGUILayout.LabelField("(This mutation rate is fine !)");
+            EditorGUILayout.IntSlider(durationProperty, 0, 300, new GUIContent("Duration"));
+            ProgressBar(durationProperty.intValue / 300f, "Duration");
 
-        EditorGUILayout.IntSlider(mutationProperty, 0, 100, new GUIContent("Mutation"));
-        ProgressBar(mutationProperty.intValue / 100f, "Mutation");
+            //Mutation
+            if (mutationProperty.intValue == 0)
+                EditorGUILayout.LabelField("(This is definitely not enough)");
+            else if (mutationProperty.intValue >= 75)
+                EditorGUILayout.LabelField("(This is probably too much)");
+            else
+                EditorGUILayout.LabelField("(This mutation rate is fine !)");
 
-        Manager manager = (Manager)target;
-        if (GUILayout.Button("RandomizeAll"))
-            manager.RandomizeAll();
+            EditorGUILayout.IntSlider(mutationProperty, 0, 100, new GUIContent("Mutation"));
+            ProgressBar(mutationProperty.intValue / 100f, "Mutation");
+
+            //All
+            Manager manager = (Manager)target;
+            if (GUILayout.Button("RandomizeAll"))
+                manager.RandomizeAll();
+        }
 
         //Application
         serializedObject.ApplyModifiedProperties();

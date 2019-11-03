@@ -3682,9 +3682,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c982ddfd307ca6944951491b5d57bb7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  populationSize: 110
-  trainingDuration: 118
-  mutationRate: 46
+  populationSize: 78
+  trainingDuration: 271
+  mutationRate: 21
   generationNb: 0
   timeLeftForThisLoop: 30
   agentPrefab: {fileID: 1652637619245189984, guid: 50f590b52ea296e44b60637ce8adb978,

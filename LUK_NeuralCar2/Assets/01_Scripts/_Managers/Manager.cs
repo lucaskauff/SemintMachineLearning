@@ -8,18 +8,24 @@ public class Manager : MonoBehaviour
     #region Variables
 
     //Custom editor variables
-    [ContextMenuItem("Randomize population size", "RandomPop"), 
+    [ContextMenuItem("Randomize population size", "RandomPop"),
+        ContextMenuItem("Add 50 cars", "AddPop"),
+        ContextMenuItem("Remove 50 cars", "RemPop"),
         Tooltip("Right click to apply a function or edit manually !")]
     public int populationSize = 200;
 
     [ContextMenuItem("Randomize training duration", "RandomDur"),
+        ContextMenuItem("Add 30s of training", "AddDur"),
+        ContextMenuItem("Remove 30s of training", "RemDur"),
         Tooltip("Right click to apply a function or edit manually !")]
     public int trainingDuration = 300;
 
     [ContextMenuItem("Randomize mutation rate", "RandomMut"),
+        ContextMenuItem("Add 10% mutation probability", "AddMut"),
+        ContextMenuItem("Remove 10% mutation probability", "RemMut"),
         Tooltip("Right click to apply a function or edit manually !")]
     public int mutationRate = 100;
-    
+
     //Regular variables
     public int generationNb = 0;
     public float timeLeftForThisLoop = 30f;
@@ -35,7 +41,7 @@ public class Manager : MonoBehaviour
 
     public int[] layers;
 
-    float timeSpentOnScene = 0;
+    public float timeSpentOnScene = 0;
     #endregion
 
     #region Unity Methods
@@ -236,6 +242,7 @@ public class Manager : MonoBehaviour
     #endregion
 
     #region Editor Methods
+    //Global modifications
     public void RandomizeAll()
     {
         RandomPop();
@@ -243,19 +250,70 @@ public class Manager : MonoBehaviour
         RandomMut();
     }
 
+    //Population methods
     void RandomPop()
     {
         populationSize = UnityEngine.Random.Range(0, 200);
     }
 
+    void AddPop()
+    {
+        if (populationSize + 50 > 200)
+            populationSize = 200;
+        else
+            populationSize += 50;
+    }
+
+    void RemPop()
+    {
+        if (populationSize - 50 < 0)
+            populationSize = 0;
+        else
+            populationSize -= 50;
+    }
+
+    //Duration methods
     void RandomDur()
     {
         trainingDuration = UnityEngine.Random.Range(0, 300);
     }
 
+    void AddDur()
+    {
+        if (trainingDuration + 30 > 300)
+            trainingDuration = 300;
+        else
+            trainingDuration += 30;
+    }
+
+    void RemDur()
+    {
+        if (trainingDuration - 30 < 0)
+            trainingDuration = 0;
+        else
+            trainingDuration -= 30;
+    }
+
+    //Mutation methods
     void RandomMut()
     {
         mutationRate = UnityEngine.Random.Range(0, 100);
+    }
+
+    void AddMut()
+    {
+        if (mutationRate + 10 > 100)
+            mutationRate = 100;
+        else
+            mutationRate += 10;
+    }
+
+    void RemMut()
+    {
+        if (mutationRate - 10 < 0)
+            mutationRate = 0;
+        else
+            mutationRate -= 10;
     }
     #endregion
 }

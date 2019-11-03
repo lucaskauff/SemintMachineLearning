@@ -31,7 +31,7 @@ public class Window_Graph : MonoBehaviour
 
     float highestFitness;
     float fitnessAddition;
-    float averageFitness;
+    public float averageFitness;
 
     private void Start()
     {
