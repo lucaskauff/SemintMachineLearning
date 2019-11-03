@@ -3682,9 +3682,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c982ddfd307ca6944951491b5d57bb7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  populationSize: 50
-  trainingDuration: 30
-  mutationRate: 5
+  populationSize: 14
+  trainingDuration: 144
+  mutationRate: 18
   generationNb: 0
   timeLeftForThisLoop: 30
   agentPrefab: {fileID: 1652637619245189984, guid: 50f590b52ea296e44b60637ce8adb978,
@@ -12049,11 +12049,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 199738523}
     m_Modifications:
-    - target: {fileID: 8551960602820233755, guid: 8d44360a67790094b8c0a6fa262cb9eb,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5429562779314398753, guid: 8d44360a67790094b8c0a6fa262cb9eb,
         type: 3}
       propertyPath: m_Name
@@ -12163,6 +12158,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551960602820233755, guid: 8d44360a67790094b8c0a6fa262cb9eb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5429562779314398759, guid: 8d44360a67790094b8c0a6fa262cb9eb,
         type: 3}

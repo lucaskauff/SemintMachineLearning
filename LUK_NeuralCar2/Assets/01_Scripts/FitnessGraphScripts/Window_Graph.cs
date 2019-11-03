@@ -9,7 +9,6 @@ public class Window_Graph : MonoBehaviour
     [SerializeField] Manager manager = default;
     [SerializeField] Sprite circleSprite = default;
     [SerializeField] RectTransform graphContainer = default;
-    [SerializeField] RectTransform ligneMediane = default;
     [SerializeField] Text ord = default;
     [SerializeField] Text ordMoyenne = default;
 

@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
+    #region Variables
+    [ContextMenuItem("Randomize Population", "RandomPop")]
     public int populationSize = 50;
-    public float trainingDuration = 30f;
-    [Range(0,100)]
-    public float mutationRate = 8f;
+    public int trainingDuration = 30;
+    public int mutationRate = 8;
     public int generationNb = 0;
     public float timeLeftForThisLoop = 30f;
 
@@ -24,7 +25,9 @@ public class Manager : MonoBehaviour
     public int[] layers;
 
     float timeSpentOnScene = 0;
+    #endregion
 
+    #region Unity Methods
     void Start()
     {
         StartCoroutine(InitCoroutine());
@@ -34,7 +37,9 @@ public class Manager : MonoBehaviour
     {
         timeLeftForThisLoop = trainingDuration - (Time.time - timeSpentOnScene);
     }
+    #endregion
 
+    #region Coroutines
     IEnumerator InitCoroutine()
     {
         NewGeneration();
@@ -64,7 +69,9 @@ public class Manager : MonoBehaviour
 
         StartCoroutine(Loop());
     }
+    #endregion
 
+    #region Custom Methods
     public void NewGeneration()
     {
         AddOrRemoveAgent();
@@ -75,9 +82,8 @@ public class Manager : MonoBehaviour
 
         generationNb += 1;
     }
-
-
-   void AddOrRemoveAgent()
+    
+    void AddOrRemoveAgent()
     {
         if (agents.Count != populationSize)
         {
@@ -114,6 +120,7 @@ public class Manager : MonoBehaviour
         Destroy(agents[agents.Count - 1].gameObject);
         agents.RemoveAt(agents.Count - 1);
     }
+
     void Mutate()
     {
         for (int i = agents.Count/2; i < agents.Count; i++)
@@ -216,4 +223,12 @@ public class Manager : MonoBehaviour
 
         DataManager.instance.Save(neuralList);
     }
+    #endregion
+
+    #region Editor Methods
+    void RandomPop()
+    {
+        //populationSize = UnityEngine.Random.Range(0, 250);
+    }
+    #endregion
 }
