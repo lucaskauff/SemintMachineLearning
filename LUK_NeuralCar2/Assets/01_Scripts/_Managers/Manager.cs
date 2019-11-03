@@ -6,10 +6,21 @@ using UnityEngine;
 public class Manager : MonoBehaviour
 {
     #region Variables
-    [ContextMenuItem("Randomize Population", "RandomPop")]
-    public int populationSize = 50;
-    public int trainingDuration = 30;
-    public int mutationRate = 8;
+
+    //Custom editor variables
+    [ContextMenuItem("Randomize population size", "RandomPop"), 
+        Tooltip("Right click to apply a function or edit manually !")]
+    public int populationSize = 200;
+
+    [ContextMenuItem("Randomize training duration", "RandomDur"),
+        Tooltip("Right click to apply a function or edit manually !")]
+    public int trainingDuration = 300;
+
+    [ContextMenuItem("Randomize mutation rate", "RandomMut"),
+        Tooltip("Right click to apply a function or edit manually !")]
+    public int mutationRate = 100;
+    
+    //Regular variables
     public int generationNb = 0;
     public float timeLeftForThisLoop = 30f;
 
@@ -86,8 +97,7 @@ public class Manager : MonoBehaviour
     void AddOrRemoveAgent()
     {
         if (agents.Count != populationSize)
-        {
-           
+        {           
             int diff = populationSize - agents.Count;
 
             if(diff > 0)
@@ -226,9 +236,26 @@ public class Manager : MonoBehaviour
     #endregion
 
     #region Editor Methods
+    public void RandomizeAll()
+    {
+        RandomPop();
+        RandomDur();
+        RandomMut();
+    }
+
     void RandomPop()
     {
-        //populationSize = UnityEngine.Random.Range(0, 250);
+        populationSize = UnityEngine.Random.Range(0, 200);
+    }
+
+    void RandomDur()
+    {
+        trainingDuration = UnityEngine.Random.Range(0, 300);
+    }
+
+    void RandomMut()
+    {
+        mutationRate = UnityEngine.Random.Range(0, 100);
     }
     #endregion
 }
